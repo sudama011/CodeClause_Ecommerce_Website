@@ -10,6 +10,7 @@ const orderSchema = new mongoose.Schema(
       },
     ],
     orderDate: { type: Date, default: Date.now() },
+    deliveredAt: { type: Date },
     status: { type: String, default: "Pending" },
     shippingAddress: {
       address: String,

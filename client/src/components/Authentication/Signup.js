@@ -11,6 +11,8 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { loginSuccess } from "../../redux/actions/authActions";
+import { useDispatch } from "react-redux";
 
 const Signup = () => {
   const [name, setName] = useState();
@@ -22,6 +24,7 @@ const Signup = () => {
   const [loading, setLoding] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const postDetails = (pic) => {
     setLoding(true);
@@ -113,7 +116,7 @@ const Signup = () => {
         position: "bottom",
       });
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      dispatch(loginSuccess(data));
       setLoding(false);
       navigate("/");
     } catch (e) {

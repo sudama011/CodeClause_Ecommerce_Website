@@ -11,6 +11,9 @@ import {
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { loginSuccess } from "../../redux/actions/authActions";
+import { useDispatch } from "react-redux";
+
 const Login = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,6 +21,7 @@ const Login = () => {
   const [loading, setLoding] = useState(false);
   const toast = useToast();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const submitHandler = async () => {
     setLoding(true);
@@ -55,7 +59,7 @@ const Login = () => {
         position: "bottom",
       });
 
-      localStorage.setItem("userInfo", JSON.stringify(data));
+      dispatch(loginSuccess(data));
       setLoding(false);
       navigate("/");
     } catch (e) {
