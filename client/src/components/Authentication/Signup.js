@@ -189,7 +189,7 @@ const Signup = () => {
           type="file"
           p={0.5}
           accept="image/*"
-          placeholder="Enter Your Email"
+          placeholder="Upload your Picture"
           onChange={(e) => postDetails(e.target.files[0])}
         />
       </FormControl>

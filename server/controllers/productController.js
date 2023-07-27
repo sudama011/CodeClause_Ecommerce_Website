@@ -7,7 +7,8 @@ const getProducts = asyncHandler(async (req, res) => {
 });
 
 const createProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, images } = req.body;
+  const { name, price, description, images, category, countInStock, user } =
+    req.body;
   if (!name || !price || !description) {
     res.status(400).json({ message: "Please fill all the fields" });
   }
@@ -16,6 +17,9 @@ const createProduct = asyncHandler(async (req, res) => {
     price,
     description,
     images,
+    category,
+    countInStock,
+    user,
   });
 
   if (product) {
@@ -25,6 +29,9 @@ const createProduct = asyncHandler(async (req, res) => {
       price: product.price,
       description: product.description,
       images: product.images,
+      category: product.category,
+      countInStock: product.countInStock,
+      user: product.user,
     });
   } else {
     res.status(400);
@@ -42,13 +49,17 @@ const getProductById = asyncHandler(async (req, res) => {
 });
 
 const updateProduct = asyncHandler(async (req, res) => {
-  const { name, price, description, images } = req.body;
+  const { name, price, description, images, category, countInStock, user } =
+    req.body;
   const product = await Product.findById(req.params.id);
   if (product) {
     product.name = name;
     product.price = price;
     product.description = description;
     product.images = images;
+    product.category = category;
+    product.countInStock = countInStock;
+    product.user = user;
     const updatedProduct = await product.save();
     res.json(updatedProduct);
   } else {

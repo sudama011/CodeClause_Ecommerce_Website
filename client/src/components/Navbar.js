@@ -45,7 +45,7 @@ const Navbar = () => {
         <Spacer />
 
         <InputGroup w="300px" mr={4}>
-          <Input placeholder="Search products"/>
+          <Input placeholder="Search products" />
           <InputRightElement pointerEvents="none">
             <SearchIcon color="gray.300" />
           </InputRightElement>
@@ -69,6 +69,10 @@ const Navbar = () => {
               <MenuList textColor="black">
                 <MenuItem>My Profile</MenuItem>
                 <MenuItem>My Orders</MenuItem>
+
+                <ChakraLink as={Link} to="/addproduct">
+                  <MenuItem>Add Product</MenuItem>
+                </ChakraLink>
 
                 <MenuDivider />
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>
