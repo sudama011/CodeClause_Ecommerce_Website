@@ -70,7 +70,8 @@ const Signup = () => {
       return;
     }
   };
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setLoding(true);
 
     if (!name || !email || !password || !confirmpassword) {
@@ -117,6 +118,7 @@ const Signup = () => {
       });
 
       dispatch(loginSuccess(data));
+      localStorage.setItem("token", JSON.stringify(data.token));
       setLoding(false);
       navigate("/");
     } catch (e) {
@@ -133,77 +135,79 @@ const Signup = () => {
   };
 
   return (
-    <VStack spacing="5px">
-      <FormControl id="first-name" isRequired>
-        <FormLabel>Name</FormLabel>
-        <Input
-          placeholder="Enter Your Name"
-          onChange={(e) => setName(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="email" isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input
-          placeholder="Enter Your Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl id="password" isRequired>
-        <FormLabel>Password</FormLabel>
-        <InputGroup>
+    <form onSubmit={submitHandler}>
+      <VStack spacing="5px">
+        <FormControl id="first-name" isRequired>
+          <FormLabel>Name</FormLabel>
           <Input
-            type={show ? "text" : "password"}
-            placeholder="Enter Your Password"
-            onChange={(e) => setPassword(e.target.value)}
+            placeholder="Enter Your Name"
+            onChange={(e) => setName(e.target.value)}
           />
+        </FormControl>
 
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
-
-      <FormControl id="confirm-password" isRequired>
-        <FormLabel>Confirm Password</FormLabel>
-        <InputGroup>
+        <FormControl isRequired>
+          <FormLabel>Email</FormLabel>
           <Input
-            type={show ? "text" : "password"}
-            placeholder="Confirm Password"
-            onChange={(e) => setConfirmpassword(e.target.value)}
+            placeholder="Enter Your Email"
+            onChange={(e) => setEmail(e.target.value)}
           />
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
+        </FormControl>
 
-      <FormControl id="pic">
-        <FormLabel>Upload your Picture</FormLabel>
-        <Input
-          type="file"
-          p={0.5}
-          accept="image/*"
-          placeholder="Upload your Picture"
-          onChange={(e) => postDetails(e.target.files[0])}
-        />
-      </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Password</FormLabel>
+          <InputGroup>
+            <Input
+              type={show ? "text" : "password"}
+              placeholder="Enter Your Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-      <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-        isLoading={loading}
-      >
-        Submit
-      </Button>
-    </VStack>
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+
+        <FormControl isRequired>
+          <FormLabel>Confirm Password</FormLabel>
+          <InputGroup>
+            <Input
+              type={show ? "text" : "password"}
+              placeholder="Confirm Password"
+              onChange={(e) => setConfirmpassword(e.target.value)}
+            />
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
+
+        <FormControl>
+          <FormLabel>Upload your Picture</FormLabel>
+          <Input
+            type="file"
+            p={0.5}
+            accept="image/*"
+            placeholder="Upload your Picture"
+            onChange={(e) => postDetails(e.target.files[0])}
+          />
+        </FormControl>
+
+        <Button
+          colorScheme="blue"
+          width="100%"
+          style={{ marginTop: 15 }}
+          type="submit"
+          isLoading={loading}
+        >
+          Submit
+        </Button>
+      </VStack>
+    </form>
   );
 };
 

@@ -43,6 +43,7 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     dispatch(logoutSuccess());
+    localStorage.removeItem("token");
     toast({
       title: "Logged out successfully.",
       status: "success",
@@ -96,6 +97,7 @@ const Navbar = () => {
                 width: "25px",
                 borderRadius: "100%",
               }}
+              key={cartCount}
             />
           </NavItem>
 

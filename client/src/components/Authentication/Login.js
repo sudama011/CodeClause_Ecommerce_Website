@@ -23,7 +23,8 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const submitHandler = async () => {
+  const submitHandler = async (e) => {
+    e.preventDefault();
     setLoding(true);
 
     if (!email || !password) {
@@ -60,6 +61,7 @@ const Login = () => {
       });
 
       dispatch(loginSuccess(data));
+      localStorage.setItem("token", JSON.stringify(data.token));
       setLoding(false);
       navigate("/");
     } catch (e) {
@@ -76,56 +78,58 @@ const Login = () => {
   };
 
   return (
-    <VStack spacing="5px">
-      <FormControl isRequired>
-        <FormLabel>Email</FormLabel>
-        <Input
-          value={email}
-          placeholder="Enter Your Email"
-          onChange={(e) => setEmail(e.target.value)}
-        />
-      </FormControl>
-
-      <FormControl isRequired>
-        <FormLabel>Password</FormLabel>
-        <InputGroup>
+    <form onSubmit={submitHandler}>
+      <VStack spacing="5px">
+        <FormControl isRequired>
+          <FormLabel>Email</FormLabel>
           <Input
-            value={password}
-            type={show ? "text" : "password"}
-            placeholder="Enter Your Password"
-            onChange={(e) => setPassword(e.target.value)}
+            value={email}
+            placeholder="Enter Your Email"
+            onChange={(e) => setEmail(e.target.value)}
           />
+        </FormControl>
 
-          <InputRightElement width="4.5rem">
-            <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
-              {show ? "Hide" : "Show"}
-            </Button>
-          </InputRightElement>
-        </InputGroup>
-      </FormControl>
+        <FormControl isRequired>
+          <FormLabel>Password</FormLabel>
+          <InputGroup>
+            <Input
+              value={password}
+              type={show ? "text" : "password"}
+              placeholder="Enter Your Password"
+              onChange={(e) => setPassword(e.target.value)}
+            />
 
-      <Button
-        colorScheme="blue"
-        width="100%"
-        style={{ marginTop: 15 }}
-        onClick={submitHandler}
-        isLoading={loading}
-      >
-        Login
-      </Button>
+            <InputRightElement width="4.5rem">
+              <Button h="1.75rem" size="sm" onClick={() => setShow(!show)}>
+                {show ? "Hide" : "Show"}
+              </Button>
+            </InputRightElement>
+          </InputGroup>
+        </FormControl>
 
-      <Button
-        variant="solid"
-        colorScheme="red"
-        width="100%"
-        onClick={() => {
-          setEmail("guest@example.com");
-          setPassword("123456");
-        }}
-      >
-        Get Guest User Credentials
-      </Button>
-    </VStack>
+        <Button
+          colorScheme="blue"
+          width="100%"
+          style={{ marginTop: 15 }}
+          type="submit"
+          isLoading={loading}
+        >
+          Login
+        </Button>
+
+        <Button
+          variant="solid"
+          colorScheme="red"
+          width="100%"
+          onClick={() => {
+            setEmail("guest@example.com");
+            setPassword("123456");
+          }}
+        >
+          Get Guest User Credentials
+        </Button>
+      </VStack>
+    </form>
   );
 };
 
