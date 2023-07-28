@@ -27,9 +27,11 @@ const Home = () => {
       </Text>
       <Box display="flex" flexWrap="wrap">
         {products.map((product) => (
-          <Link key={product._id} to={`/product/${product._id}`}>
-            <ProductCard product={product} />
-          </Link>
+          <Box key={product._id} m={1} _hover={{ bgColor: "grey" }}>
+            <Link to={`/product/${product._id}`}>
+              <ProductCard product={product} />
+            </Link>
+          </Box>
         ))}
       </Box>
     </Box>

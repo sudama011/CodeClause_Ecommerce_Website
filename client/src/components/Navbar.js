@@ -16,6 +16,7 @@ import {
   Input,
   InputGroup,
   InputRightElement,
+  useToast,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
@@ -28,6 +29,7 @@ import NotificationBadge, { Effect } from "react-notification-badge";
 const Navbar = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const toast = useToast();
 
   const user = useSelector((state) => state.auth.user);
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
@@ -41,6 +43,13 @@ const Navbar = () => {
 
   const logoutHandler = () => {
     dispatch(logoutSuccess());
+    toast({
+      title: "Logged out successfully.",
+      status: "success",
+      duration: 5000,
+      isClosable: true,
+      position: "bottom",
+    });
     navigate("/");
   };
 
@@ -105,9 +114,11 @@ const Navbar = () => {
                 <MenuItem>My Profile</MenuItem>
                 <MenuItem>My Orders</MenuItem>
 
-                <ChakraLink as={Link} to="/addproduct">
-                  <MenuItem>Add Product</MenuItem>
-                </ChakraLink>
+                {user?.isAdmin && (
+                  <ChakraLink as={Link} to="/addproduct">
+                    <MenuItem>Add Product</MenuItem>
+                  </ChakraLink>
+                )}
 
                 <MenuDivider />
                 <MenuItem onClick={logoutHandler}>Logout</MenuItem>

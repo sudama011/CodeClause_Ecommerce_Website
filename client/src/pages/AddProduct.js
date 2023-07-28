@@ -49,12 +49,18 @@ const AddProduct = () => {
       );
       toast({
         title: "Product added.",
-        description: "We've added your product for you.",
+        description: "We've added your product for sale.",
         status: "success",
         duration: 5000,
         isClosable: true,
         position: "bottom",
       });
+      setName("");
+      setDescription("");
+      setPrice("");
+      setImages([]);
+      setCategory("");
+      setCountInStock("");
     } catch (error) {
       console.error(error);
     }
