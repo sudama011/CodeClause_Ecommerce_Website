@@ -29,6 +29,7 @@ const registerUser = asyncHandler(async (req, res) => {
       email: user.email,
       pic: user.pic,
       cart: user.cart,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -50,6 +51,7 @@ const authUser = asyncHandler(async (req, res) => {
       email: user.email,
       pic: user.pic,
       cart: user.cart,
+      isAdmin: user.isAdmin,
       token: generateToken(user._id),
     });
   } else {
@@ -59,27 +61,58 @@ const authUser = asyncHandler(async (req, res) => {
 });
 
 const updateUserProfile = asyncHandler(async (req, res) => {
-  const user = await User.findById(req.user._id);
-  if (user) {
-    user.name = req.body.name || user.name;
-    user.email = req.body.email || user.email;
-    user.pic = req.body.pic || user.pic;
-    if (req.body.password) {
-      user.password = req.body.password;
-    }
-    const updatedUser = await user.save();
-    res.json({
-      _id: updatedUser._id,
-      name: updatedUser.name,
-      pic: updatedUser.pic,
-      email: updatedUser.email,
-      cart: updatedUser.cart,
-      token: generateToken(updatedUser._id),
-    });
-  } else {
-    res.status(404);
-    throw new Error("User not found");
-  }
+  const user = req.user;
+
+  user.name = req.body.name || user.name;
+  user.email = req.body.email || user.email;
+  user.pic = req.body.pic || user.pic;
+  user.password = req.body.password || user.password;
+  user.isAdmin = req.body.isAdmin || user.isAdmin;
+
+  const updatedUser = await user.save();
+  res.json({
+    _id: updatedUser._id,
+    name: updatedUser.name,
+    email: updatedUser.email,
+    pic: updatedUser.pic,
+    cart: updatedUser.cart,
+    isAdmin: user.isAdmin,
+    token: generateToken(updatedUser._id),
+  });
 });
 
-module.exports = { registerUser, authUser, updateUserProfile };
+const addCartItem = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { product, quantity } = req.body;
+  const itemExists = user.cart.find((item) => item.product == product);
+  if (itemExists) {
+    itemExists.quantity = quantity;
+  } else {
+    user.cart.push({ product, quantity });
+  }
+  await user.save();
+  res.json(user.cart);
+});
+
+const removeCartItem = asyncHandler(async (req, res) => {
+  const user = req.user;
+  const { product } = req.body;
+  user.cart = user.cart.filter((item) => item.product != product);
+  await user.save();
+  res.json(user.cart);
+});
+
+const clearCart = asyncHandler(async (req, res) => {
+  const user = req.user;
+  user.cart = [];
+  await user.save();
+  res.json(user.cart);
+});
+
+const getUserCart = asyncHandler(async (req, res) => {
+  const user = req.user;
+  await user.populate("cart.product");
+  res.json(user.cart);
+});
+
+module.exports = { registerUser, authUser, updateUserProfile, addCartItem, removeCartItem, clearCart, getUserCart };
