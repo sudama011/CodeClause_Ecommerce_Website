@@ -86,7 +86,7 @@ const addCartItem = asyncHandler(async (req, res) => {
   const { product, quantity } = req.body;
   const itemExists = user.cart.find((item) => item.product == product);
   if (itemExists) {
-    itemExists.quantity += quantity;
+    itemExists.quantity = quantity;
   } else {
     user.cart.push({ product, quantity });
   }
