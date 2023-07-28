@@ -8,8 +8,7 @@ import {
   VStack,
   useToast,
 } from "@chakra-ui/react";
-import { useSelector, useDispatch } from "react-redux";
-import { addProduct } from "../redux/actions/productActions";
+import { useSelector } from "react-redux";
 import axios from "axios";
 
 const AddProduct = () => {
@@ -23,7 +22,6 @@ const AddProduct = () => {
   const user = useSelector((state) => state.auth.user);
 
   const toast = useToast();
-  const dispatch = useDispatch();
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -36,7 +34,7 @@ const AddProduct = () => {
         },
       };
 
-      const { data } = await axios.post(
+      await axios.post(
         "/api/product",
         {
           name,
@@ -49,7 +47,6 @@ const AddProduct = () => {
         },
         config
       );
-      dispatch(addProduct(data));
       toast({
         title: "Product added.",
         description: "We've added your product for you.",

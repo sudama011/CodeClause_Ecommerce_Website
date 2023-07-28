@@ -1,15 +1,17 @@
 import { useParams } from "react-router-dom";
 import axios from "axios";
-import { useSelector } from "react-redux";
+import { useSelector,useDispatch } from "react-redux";
 import { useEffect, useState } from "react";
 import { Box, Text, Image, Button } from "@chakra-ui/react";
 import { Carousel } from "react-responsive-carousel";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
+import {updateCart} from "../redux/actions/authActions";
 
 const ProductDetails = () => {
   const { id } = useParams();
   const [product, setProduct] = useState();
   const user = useSelector((state) => state.auth.user);
+  const dispatch = useDispatch();
 
   const fetchProductById = async () => {
     try {
@@ -19,7 +21,6 @@ const ProductDetails = () => {
       console.log(error);
     }
   };
-
   useEffect(() => {
     fetchProductById();
   }, []);
@@ -33,13 +34,15 @@ const ProductDetails = () => {
         },
       };
 
-      await axios.post(
-        `/api/cart/${id}`,
+      const {data} = await axios.put(
+        `/api/user/cart/add`,
         {
+          product: product._id,
           quantity: 1,
         },
         config
       );
+      dispatch(updateCart(data));
     } catch (error) {
       console.log(error);
     }
@@ -67,6 +70,7 @@ const ProductDetails = () => {
                 <div key={index}>
                   <Image
                     maxHeight="300px"
+                    maxWidth="300px"
                     src={image}
                     alt={`Product ${index + 1}`}
                   />

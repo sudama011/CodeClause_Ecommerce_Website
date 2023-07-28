@@ -1,4 +1,3 @@
-
 const initialState = {
   isLoggedIn: false,
   user: null,
@@ -7,6 +6,7 @@ const initialState = {
 // Define action types
 const LOGIN_SUCCESS = "LOGIN_SUCCESS";
 const LOGOUT_SUCCESS = "LOGOUT_SUCCESS";
+const UPDATE_CART = "UPDATE_CART";
 
 // Define the authReducer
 const authReducer = (state = initialState, action) => {
@@ -22,6 +22,14 @@ const authReducer = (state = initialState, action) => {
         ...state,
         isLoggedIn: false,
         user: null,
+      };
+    case UPDATE_CART:
+      return {
+        ...state,
+        user: {
+          ...state.user,
+          cart: action.payload,
+        },
       };
     default:
       return state;
