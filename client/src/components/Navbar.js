@@ -47,9 +47,11 @@ const Navbar = () => {
   return (
     <Box as="nav" py={4} px={8} bg="blue.500" color="white">
       <Flex alignItems="center">
-        <Text fontSize="xl" fontWeight="bold">
-          HappyBuyers
-        </Text>
+        <NavItem to="/">
+          <Text fontSize="xl" fontWeight="bold">
+            HappyBuyers
+          </Text>
+        </NavItem>
 
         <Spacer />
 

@@ -69,8 +69,8 @@ const ProductDetails = () => {
               {product.images.map((image, index) => (
                 <div key={index}>
                   <Image
-                    maxHeight="300px"
-                    maxWidth="300px"
+                    boxSize="sm"
+                    fit={"contain"}
                     src={image}
                     alt={`Product ${index + 1}`}
                   />
