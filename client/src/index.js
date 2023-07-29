@@ -9,7 +9,7 @@ import axios from "axios";
 import { Provider } from "react-redux";
 import store from "./redux/store";
 
-axios.defaults.baseURL = "http://localhost:5000/";
+axios.defaults.baseURL = "https://happybuyers-api.onrender.com/";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(

@@ -77,18 +77,25 @@ npm install
 
 ## Screenshots
 
-![Homepage](<Screenshot (63).png>)
+![Homepage]
 *Caption: HappyBuyers Homepage showcasing! featured products and search functionality.*
 
-![Product Details](<Screenshot (64).png>)
+--- -
+
+![Product Details]
 *Caption: Product Details page displaying product information and reviews.*
 
-![Cart Page](<Screenshot (65).png>)
+--- -
+
+![Cart Page]
 *Caption: Cart Page showing added products and total price.*
 
-![Add Product](<Screenshot (66).png>)
+--- -
+
+![Add Product]
 *Caption: Admin can add new products with details and images.*
 
+--- -
 
 ## Demo
 
