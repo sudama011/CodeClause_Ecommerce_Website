@@ -17,11 +17,12 @@ import {
   InputGroup,
   InputRightElement,
   useToast,
+  Image,
 } from "@chakra-ui/react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping } from "@fortawesome/free-solid-svg-icons";
 import { ChevronDownIcon, SearchIcon } from "@chakra-ui/icons";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { logoutSuccess } from "../redux/actions/authActions";
 import NotificationBadge, { Effect } from "react-notification-badge";
@@ -55,30 +56,51 @@ const Navbar = () => {
   };
 
   return (
-    <Box as="nav" py={4} px={8} bg="blue.500" color="white">
-      <Flex alignItems="center">
+    <Box as="nav" py={2} px={4} bg="blue.500" color="white">
+      <Flex alignItems="center" flexDirection={{ base: "column", md: "row" }}>
         <NavItem to="/">
-          <Text fontSize="xl" fontWeight="bold">
-            HappyBuyers
-          </Text>
+          <Box
+            display="flex"
+            alignItems="center"
+            justifyContent="center"
+            mb={{ base: 2, md: 0 }}
+          >
+            <Image boxSize="50px" src="./logo192.png" alt="HappyBuyers" />
+            <Text
+              fontSize={{ base: "xl", md: "2xl" }}
+              fontWeight="bold"
+              ml={2}
+              display="inline"
+            >
+              HappyBuyers
+            </Text>
+          </Box>
         </NavItem>
 
         <Spacer />
 
-        <InputGroup w="300px" mr={4}>
-          <Input placeholder="Search products" />
+        <InputGroup
+          w={{ base: "full", md: "300px" }}
+          mr={4}
+          mb={{ base: 2, md: 0 }}
+        >
+          <Input
+            placeholder="Search products"
+            aria-label="Search products"
+            // Add any search functionality here
+          />
           <InputRightElement pointerEvents="none">
             <SearchIcon color="gray.300" />
           </InputRightElement>
         </InputGroup>
 
-        <Flex>
-          <NavItem to="/">Home</NavItem>
+        <Flex alignItems="center">
           <NavItem to="/cart">
             <FontAwesomeIcon
               icon={faCartShopping}
               size="2xl"
               style={{ color: "#f9e771" }}
+              aria-label="Cart"
             />
             <NotificationBadge
               count={cartCount}
@@ -109,17 +131,22 @@ const Navbar = () => {
                 colorScheme="blue"
                 variant="outline"
                 mx={2}
+                aria-label="User Profile Menu"
               >
                 <Avatar size="sm" name={user.name} src={user.pic} />
               </MenuButton>
               <MenuList textColor="black">
-                <MenuItem>My Profile</MenuItem>
-                <MenuItem>My Orders</MenuItem>
+                <MenuItem as={Link} to="/profile">
+                  My Profile
+                </MenuItem>
+                <MenuItem as={Link} to="/orders">
+                  My Orders
+                </MenuItem>
 
                 {user?.isAdmin && (
-                  <ChakraLink as={Link} to="/addproduct">
-                    <MenuItem>Add Product</MenuItem>
-                  </ChakraLink>
+                  <MenuItem as={Link} to="/addproduct">
+                    Sell product
+                  </MenuItem>
                 )}
 
                 <MenuDivider />
@@ -136,8 +163,20 @@ const Navbar = () => {
 };
 
 const NavItem = ({ to, children }) => {
+  const location = useLocation();
+  const isActive = location.pathname === to;
+
   return (
-    <ChakraLink as={Link} to={to} px={4} py={2}>
+    <ChakraLink
+      as={Link}
+      to={to}
+      px={4}
+      py={2}
+      borderBottom={isActive ? "2px solid white" : "none"}
+      _hover={{
+        borderBottom: "2px solid white",
+      }}
+    >
       {children}
     </ChakraLink>
   );
