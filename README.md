@@ -77,22 +77,22 @@ npm install
 
 ## Screenshots
 
-![Homepage]
+![Homepage](https://github.com/sudama011/CodeClause_Ecommerce_Website/assets/85701247/3a83a526-565f-486a-8bd1-eb48518652da)
 *Caption: HappyBuyers Homepage showcasing! featured products and search functionality.*
 
 --- -
 
-![Product Details]
+![Product Details](https://github.com/sudama011/CodeClause_Ecommerce_Website/assets/85701247/834ec891-36d6-48ed-8475-3db45a52adbe)
 *Caption: Product Details page displaying product information and reviews.*
 
 --- -
 
-![Cart Page]
+![Cart Page](https://github.com/sudama011/CodeClause_Ecommerce_Website/assets/85701247/292f8854-80cb-43b0-b8c5-cd38ccf9cdda)
 *Caption: Cart Page showing added products and total price.*
 
 --- -
 
-![Add Product]
+![Add Product](https://github.com/sudama011/CodeClause_Ecommerce_Website/assets/85701247/821d6ca8-afa4-474d-81f2-9ff0968fea3d)
 *Caption: Admin can add new products with details and images.*
 
 --- -
